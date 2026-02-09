@@ -1,3 +1,11 @@
+---
+title: 'Early Neurodevelopmental Drivers of Autism: A Transcriptomic Analysis of Chd8
+  Dysregulation in the E14 Mouse Brain'
+author: "Yvan Johnson"
+date: "2026-02-07"
+output: html_document
+---
+```{r}
 #Install BiocManager 
 #The 'if' statement just ensures that BiocManager is installed safely but I do not NEED to include this conditional statement
 #if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -65,7 +73,7 @@ getGEOSuppFiles("GSE263334")
 
 
 
-# 2. Now I need to see a list of the files inside of that new folder to find the EXACT name of the counts file that I need
+#2. Now I need to see a list of the files inside of that new folder to find the EXACT name of the counts file that I need
 #This will display that list:
 cat("Listing downloaded files...\n") #Just adding this for a bit of readability in the console, but this line isn't necessary 
 data_files <- list.files("GSE263334")
@@ -88,7 +96,7 @@ print(data_files)
 #1. I first have to define the path to the specific DESeq2 file that I want to use (which is the E14 data)
 file_path_e14 <- "GSE263334/GSE263334_E14_Chd8KI_DESeq2.txt.gz" # <-- GSE263334 is the folder and GSE263334_E14_Chd8KI_DESeq2.txt.gz is inside of that folder. The folder shows that there are two files. E14 and E18. This specific file contains only the E14 data
 
-#2. Next, I have to have R read the data. I can use the read_tsv() function from the tidyverse package
+# 2. Next, I have to have R read the data. I can use the read_tsv() function from the tidyverse package
 # That is because this file is a TAB-SEPARATED file (meaning that "tabs" or spaces are what's separating the information). This is obvious just by clicking on the file and opening up the file in Notepad
 #You quickly see that it has a header line (meaning that it has column names) and MULTIPLE values underneath each header. It basically already looks like a table, just without the grid lines.
 full_data_e14 <- read_tsv(file_path_e14)
@@ -103,7 +111,7 @@ e14_results <- full_data_e14 %>%
   as.data.frame() %>%
   tibble::column_to_rownames("gene_id") # I'm using the column_to_rownames function from the tibble package
 
-#4. Time to see if the dimensions of the matrix that we created are correct now. 
+# 4. Time to see if the dimensions of the matrix that we created are correct now. 
 cat("Dimensions of the counts matrix:\n") #Just adding this for a bit of readability in the console, but this line isn't necessary  
 dim(e14_results)
 
@@ -267,4 +275,7 @@ ggplot(data=e14_results, aes(x=log2FoldChange, y=-log10(padj), color=gene_type))
 #6. Inspect everything. Including the 'title' and 'genotype' columns to confirm groups
 #View(e14_metadata)
 
+
+
+```
 
